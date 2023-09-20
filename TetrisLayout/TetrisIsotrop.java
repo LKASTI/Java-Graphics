@@ -125,10 +125,12 @@ public class TetrisIsotrop extends Frame{
             g.drawRect(nextLeft, nextTop, nextRight-nextLeft, nextBot-nextTop);
             drawRedL(g, nextLeft, nextRight, nextTop, nextBot, cellLen);
 
-            /* draw quit string (TODO: isotropic font size) */
-            Font f = new Font("Serif", Font.BOLD, 20);
+            int fsize = getScaledFont(getWidth(), getHeight());
+
+            /* draw quit string */
+            Font f = new Font("Serif", Font.BOLD, fsize);
             g.setFont(f);
-            g.drawString("Quit", (int)(quitRight - ((quitRight-quitLeft)*(0.6F))), (int)(quitBot - ((quitBot-quitTop)*(0.4F))));
+            g.drawString("Quit", (int)(quitRight - ((quitRight-quitLeft)*(0.7F))), (int)(quitBot - ((quitBot-quitTop)*(0.4F))));
 
 
             /* draw a 2x2 box component */
@@ -141,7 +143,7 @@ public class TetrisIsotrop extends Frame{
             drawBlueL(g, mainLeft, mainRight, mainTop, mainBot, cellLen);
 
             /* draw pause box if cursor in main area */
-            f = new Font("Serif", Font.BOLD, 20);
+            f = new Font("Serif", Font.BOLD, fsize);
             g.setFont(f);
             if(mouseInsideMainArea){
                 int pauseLeft = mainLeft + (cellLen * 2);
@@ -149,10 +151,22 @@ public class TetrisIsotrop extends Frame{
                 int pauseTop = mainTop + (cellLen * 8);
                 int pauseBot = mainTop + (cellLen * 10);
                 g.drawRect(pauseLeft, pauseTop, pauseRight-pauseLeft, pauseBot-pauseTop);
-                /* (TODO: isotropic font size) */
-                g.drawString("Pause", (int)(pauseRight - ((pauseRight-pauseLeft)*(0.6F))), (int)(pauseBot - ((pauseBot-pauseTop)*(0.4F))));
+                g.drawString("Pause", (int)(pauseRight - ((pauseRight-pauseLeft)*(0.7F))), (int)(pauseBot - ((pauseBot-pauseTop)*(0.4F))));
             }
         }
+        private int getScaledFont(int w, int h) {
+            // Choose a reference size that determines the font size
+            int referenceSize = Math.min(w, h);
+        
+            // Set a scaling factor (adjust this as needed)
+            double scale = 0.04;
+        
+            // Calculate the font size based on the reference size and scale factor
+            int fontSize = (int) (referenceSize * scale);
+        
+            return fontSize;
+        }
+        
         private void drawRedL(Graphics g, int nextLeft, int nextRight, int nextTop, int nextBot, int cellLen){
             g.setColor(Color.RED);
             g.fillRect(nextLeft + (cellLen * 1), nextTop + (cellLen * 2), cellLen, cellLen);
